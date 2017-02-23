@@ -1,0 +1,74 @@
+/* Copyright (c) 2017 MIT 6.813/6.831 course staff, all rights reserved.
+ * Redistribution of original or derived work requires permission of course staff.
+ */
+
+/* Your css code here! */
+#firstColumn {
+	text-align: center;
+	font-weight: bold;
+	color: #CD5C5C;
+	padding-right: 10px;
+  padding-top: 100px;
+}
+
+#mainColumn {
+  vertical-align: center;
+}
+
+#lastColumn {
+  vertical-align: center;
+	padding-left: 10px;
+	text-align: center;
+  color: #CD5C5C;
+}
+
+#gameTable {
+	width: 320px;
+	height: 320px;
+	margin: auto;
+}
+
+#arrows {
+	margin: auto;
+}
+
+#column3Table {
+	width:100%;
+	height:100%;
+  text-align: center;
+}
+
+.btn[disabled] {
+  background-color: lightgrey;
+  color: black;
+}
+
+.btn:not([disabled]) {
+	cursor: pointer;
+  background-color: #87CEFA;
+  color: white;
+}
+
+.boardCell {
+	text-align: center;
+	border: 1px solid white;
+	color: white;
+  width: 40px;
+  border-radius: 6px;
+}
+
+.arrowButton[disabled] {
+  background-color:lightgrey; 
+  color: black;
+}
+
+.arrowButton:not([disabled]) {
+  background-color: #87CEFA;
+  color: white;
+}
+
+#moveCoord {
+  width: 30px;
+  border-radius: 6px;
+}
+
