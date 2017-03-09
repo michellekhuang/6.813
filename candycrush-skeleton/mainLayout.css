@@ -26,6 +26,8 @@
 	width: 320px;
 	height: 320px;
 	margin: auto;
+  z-index: -1;
+  position: absolute;
 }
 
 #arrows {
@@ -53,8 +55,8 @@
 	text-align: center;
 	border: 1px solid white;
 	color: white;
-  width: 40px;
   border-radius: 6px;
+  display: inline-block;
 }
 
 .arrowButton[disabled] {
@@ -72,3 +74,7 @@
   border-radius: 6px;
 }
 
+#canvasOverlay {
+  width: 320px;
+  height: 320px;
+}

@@ -63,16 +63,26 @@ $.extend({
 
 // constants
 var DEFAULT_BOARD_SIZE = 8;
-
+var BOARD_SIZE;
+var LETTERS = {};
+var BOARD_WIDTH = 320;
 // data model at global scope for easier debugging
 var board;
 var rules;
- 
+
 // initialize board
-if ($.getUrlVar('size') && $.getUrlVar('size') >= 3) {
+if ($.getUrlVar('size') && $.getUrlVar('size') >= 3 && $.getUrlVar('size') <= 20) {
   board = new Board($.getUrlVar('size'));
+  BOARD_SIZE = $.getUrlVar('size');
 } else {
   board = new Board(DEFAULT_BOARD_SIZE);
+  BOARD_SIZE = DEFAULT_BOARD_SIZE;
+}
+
+// initialize letters
+var alphabet = 'abcdefghijklmnopqrst';
+for (var i = 0; i < alphabet.length; i++) {
+  LETTERS[i] = alphabet.charAt(i);
 }
 
 // load a rule
@@ -81,16 +91,28 @@ rules = new Rules(board);
 // Final initialization entry point: the Javascript code inside this block
 // runs at the end of start-up when the page has finished loading.
 $(document).ready(function(){
-  var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-  for (var row_i = 0; row_i < 8; row_i++) {
-    var row = $("<tr></tr>");
-    for (var col_i = 0; col_i < 8; col_i++) {
-      // Use .append on jquery element to add children
-      var celVal = letters[col_i] + (row_i+1).toString();
-      var cell = $("<td class='boardCell' id=" + letters[col_i] + row_i.toString() + ">" + celVal + "</td>");
-      row.append(cell);
+  var canvas = document.getElementById("gameTable");
+  var context = canvas.getContext("2d");
+  var box_size = BOARD_WIDTH/BOARD_SIZE;
+  for (var x = 0; x <= BOARD_WIDTH; x += box_size) {
+    context.moveTo(x, 0);
+    context.lineTo(x, BOARD_WIDTH);
+  }
+  for (var y = 0; y <= BOARD_WIDTH; y += box_size) {
+    context.moveTo(0, y);
+    context.lineTo(BOARD_WIDTH, y);
+  }
+  context.strokeStyle = "black";
+  context.stroke();
+
+  for (var row_i = 0; row_i < BOARD_SIZE; row_i++) {
+    var vertical_pos = row_i * (box_size);
+    for (var col_i = 0; col_i < BOARD_SIZE; col_i++) {
+      var horizontal_pos = col_i * (box_size);
+      var celVal = LETTERS[col_i] + (row_i+1).toString();
+      var cell = $("<div class='boardCell' id='" + LETTERS[col_i] + row_i.toString() + "' style='width:" + box_size + "px; height: " + box_size + "px;'>" + celVal + "</div>");
+      $("#canvasOverlay").append(cell);
     }
-    $("#gameTableBody").append(row);
   }
   // Start board
   rules.prepareNewGame();
@@ -109,7 +131,9 @@ function getCandyFromCoord(coord) {
 // check if an input is valid
 function isInputValid(input) {
   if (input.length === 2) {
-    var regex = /[a-h][1-8]/;
+    var validLetters = '[a-' + alphabet.charAt(BOARD_SIZE-1) + ']';
+    var validNumbers = '[1-' + BOARD_SIZE.toString() + ']';
+    var regex = new RegExp(validLetters + validNumbers);
     if (input.match(regex) !== null) {
       return true;
     }
@@ -133,9 +157,7 @@ function isValidCrush() {
 // add a candy to the board
 $(board).on('add', function(e, info)
 {
-  var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-
-  var cell = $("#" + letters[info.toCol] + info.toRow.toString());
+  var cell = $("#" + LETTERS[info.toCol] + info.toRow.toString());
   cell.css("background-color", info.candy.color);
 
   if (info.candy.color === "#FFFF66") {
@@ -149,8 +171,7 @@ $(board).on('add', function(e, info)
 // move a candy on the board
 $(board).on('move', function(e, info)
 {
-  var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-  var cell = $("#" + letters[info.toCol] + info.toRow.toString());
+  var cell = $("#" + LETTERS[info.toCol] + info.toRow.toString());
   cell.css("background-color", info.candy.color);
 
   if (info.candy.color === "#FFFF66") {
@@ -170,8 +191,7 @@ $(board).on('move', function(e, info)
 // remove a candy from the board
 $(board).on('remove', function(e, info)
 {
-  var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-  var cell = $("#" + letters[info.fromCol] + info.fromRow.toString());
+  var cell = $("#" + LETTERS[info.fromCol] + info.fromRow.toString());
   cell.css("background-color", "white");
 });
 
@@ -260,13 +280,16 @@ $(document).on('keyup', '#moveCoord', function(evt) {
     </div>
 
     <div class="col-md-6" id="mainColumn">
-
-      <!-- Column 2 Code Here -->
-      <table id="gameTable">
-        <tbody id="gameTableBody">
-        </tbody>
-      </table>
-
+      <div id="gameContainer">
+        <!-- Column 2 Code Here -->
+        <canvas id="gameTable" width = "320" height="320">
+          <!-- Old table code
+          <tbody id="gameTableBody">
+          </tbody> -->
+        </canvas>
+        <div id="canvasOverlay">
+        </div>
+      </div>
     </div>
 
     <div class="col-md-3" id="lastColumn">
