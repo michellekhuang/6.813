@@ -37,6 +37,7 @@ var Rules = function(board)
       if (crushable.length == 0) break;
       this.removeCrushes(crushable);
     }
+    board.resetScore();
     scoring = true;
   }
 

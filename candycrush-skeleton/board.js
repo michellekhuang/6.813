@@ -34,7 +34,7 @@ var Board = function(size)
   // square[row][col] is the candy in that square, or null if square is empty
   this.square = new Array(this.boardSize);
   // make an empty candyboard
-  for (var i = 0; i <= this.boardSize; i++)
+  for (var i = 0; i < this.boardSize; i++)
   {
     this.square[i] = [];
   }
@@ -206,7 +206,7 @@ var Board = function(size)
   {
     if (this.isEmptyLocation(row, col))
     {
-      console.log("removeAt found no candy at " + r + "," + c);
+      console.log("removeAt found no candy at " + row + "," + col);
     }
     else
     {

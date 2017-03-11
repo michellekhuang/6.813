@@ -53,10 +53,15 @@
 
 .boardCell {
 	text-align: center;
-	border: 1px solid white;
+	//border: 1px solid white;
 	color: white;
-  border-radius: 6px;
+  //border-radius: 6px;
   display: inline-block;
+}
+
+.boardCell img {
+  width: 100%;
+  height: 100%;
 }
 
 .arrowButton[disabled] {
@@ -77,4 +82,12 @@
 #canvasOverlay {
   width: 320px;
   height: 320px;
+  line-height: 0px;
+}
+
+#scoreLabel {
+  background-color: #CD5C5C;
+  color: white;
+  width: 45%;
+  border-radius: 3px;
 }

@@ -32,10 +32,11 @@ var Candy = function(color, id)
 };
 
 Candy.colors = [
-  '#CD5C5C', // red
-  '#FFFF66', // yellow
-  '#82C439', // green
-  '#FF860B', // orange
-  '#87CEFA', // blue
-  '#8B4CB9'  // purple
+  'red', //'#CD5C5C'
+  'yellow', //'#FFFF66'
+  'green', //'#82C439'
+  'orange', //'#FF860B'
+  'blue', // '#87CEFA'
+  'purple'  // '#8B4CB9'
 ];
+
