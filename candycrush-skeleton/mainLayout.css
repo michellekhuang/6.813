@@ -25,7 +25,13 @@
 #gameTable {
 	width: 320px;
 	height: 320px;
-	margin: auto;
+	//margin: auto;
+}
+
+#gameCanvas {
+  width: 320px;
+  height: 320px;
+  margin: auto;
   z-index: -1;
   position: absolute;
 }
@@ -49,6 +55,10 @@
 	cursor: pointer;
   background-color: #87CEFA;
   color: white;
+}
+
+#showMoveButton {
+  margin: 10px;
 }
 
 .boardCell {
@@ -88,6 +98,10 @@
 #scoreLabel {
   background-color: #CD5C5C;
   color: white;
-  width: 45%;
+  width: 50%;
   border-radius: 3px;
+}
+
+#column3Table {
+  height: 50%;
 }

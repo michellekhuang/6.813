@@ -99,7 +99,7 @@ rules = new Rules(board);
 // Final initialization entry point: the Javascript code inside this block
 // runs at the end of start-up when the page has finished loading.
 $(document).ready(function(){
-  var canvas = document.getElementById("gameTable");
+  var canvas = document.getElementById("gameCanvas");
   var context = canvas.getContext("2d");
   var box_size = BOARD_WIDTH/BOARD_SIZE;
   for (var x = 0; x <= BOARD_WIDTH; x += box_size) {
@@ -114,13 +114,14 @@ $(document).ready(function(){
   context.stroke();
 
   for (var row_i = 0; row_i < BOARD_SIZE; row_i++) {
-    var vertical_pos = row_i * (box_size);
+    var row = $("<tr></tr>");
     for (var col_i = 0; col_i < BOARD_SIZE; col_i++) {
-      var horizontal_pos = col_i * (box_size);
       var celVal = LETTERS[col_i] + (row_i+1).toString();
-      var cell = $("<div class='boardCell' id='" + LETTERS[col_i] + row_i.toString() + "' style='width:" + box_size + "px; height: " + box_size + "px;'>" + "</div>");
-      $("#canvasOverlay").append(cell);
+      var cell = $("<td class='boardCell' id='" + LETTERS[col_i] + row_i.toString() + "' style='width:" + box_size + "px; height: " + box_size + "px;'>" + "</td>");
+      row.append(cell);
+      //$("#canvasOverlay").append(cell);
     }
+    $("#gameTableBody").append(row);
   }
   // Start board
   rules.prepareNewGame();
@@ -159,6 +160,14 @@ function isValidCrush() {
   }
 }
 
+// draws an arrow using canvas
+function drawArrow(startX, startY, size) {
+  var canvas = document.getElementById("gameTable");
+  var context = canvas.getContext("2d");
+  context.moveTo(startX, startY);
+
+}
+
 /* Event Handlers */
 // access the candy object with info.candy
 
@@ -166,6 +175,7 @@ function isValidCrush() {
 $(board).on('add', function(e, info)
 {
   var cell = $("#" + LETTERS[info.toCol] + info.toRow.toString());
+  cell.html("");
   cell.append($("<img src='graphics/" + info.candy.color + "-candy.png'>"));
 
   if (info.candy.color === "#FFFF66") {
@@ -180,7 +190,6 @@ $(board).on('add', function(e, info)
 $(board).on('move', function(e, info)
 {
   var cell = $("#" + LETTERS[info.toCol] + info.toRow.toString());
-  //cell.remove();
   cell.html("");
   cell.append($("<img src='graphics/" + info.candy.color + "-candy.png'>"));
 
@@ -214,6 +223,11 @@ $(board).on('scoreUpdate', function(e, info)
   $("#scoreLabel").html(score + " points");
   if (candy !== undefined) {
     $("#scoreLabel").css("background-color", COLOR_MAP[candy.color]);
+    if (candy.color === "yellow") {
+      $("#scoreLabel").css("color", "grey");
+    } else {
+      $("#scoreLabel").css("color", "white");
+    }
   }
 });
 
@@ -276,6 +290,14 @@ $(document).on('click', "#crush", function(evt) {
   }, 500);
 });
 
+$(document).on('click', '#showMoveButton', function(evt) {
+  var move = rules.getRandomValidMove();
+  var candy = move.candy;
+  var canvas = document.getElementById("gameTable");
+  var context = canvas.getContext("2d");
+
+});
+
 // keyboard events arrive here
 $(document).on('keyup', '#moveCoord', function(evt) {
   var coordVal = $("#moveCoord").val().toLowerCase();
@@ -311,18 +333,24 @@ $(document).on('keyup', '#moveCoord', function(evt) {
           </label>
         </div>
         <div>
-          <input class="btn" type="button" value="New Game" id="newGameButton"/>
+          <input class="btn" type="button" value="New Game" id="newGameButton" style="width:50%;"/>
         </div>
-
+        <div>
+          <input class="btn" type="button" value="Show Move" id="showMoveButton" style="width:50%;"/>
+        </div>
       </div>
     </div>
 
     <div class="col-md-6" id="mainColumn">
       <div id="gameContainer">
         <!-- Column 2 Code Here -->
-        <canvas id="gameTable" width = "320" height="320">
+        <canvas id="gameCanvas" width = "320" height="320">
         </canvas>
-        <div id="canvasOverlay">
+          <table id="gameTable">
+            <tbody id="gameTableBody">
+            </tbody>
+          </table>
+          <div id="canvasOverlay">
         </div>
       </div>
     </div>
