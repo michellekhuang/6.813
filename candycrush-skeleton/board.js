@@ -46,7 +46,7 @@ var Board = function(size)
   this.isValidLocation = function(row, col)
   {
     return (row >= 0 && col >= 0 &&
-            row <= this.boardSize && col <= this.boardSize &&
+            row < this.boardSize && col < this.boardSize &&
             row == Math.round(row) && col == Math.round(col));
   }
 

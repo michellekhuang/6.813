@@ -102,16 +102,6 @@ $(document).ready(function(){
   var canvas = document.getElementById("gameCanvas");
   var context = canvas.getContext("2d");
   var box_size = BOARD_WIDTH/BOARD_SIZE;
-  for (var x = 0; x <= BOARD_WIDTH; x += box_size) {
-    context.moveTo(x, 0);
-    context.lineTo(x, BOARD_WIDTH);
-  }
-  for (var y = 0; y <= BOARD_WIDTH; y += box_size) {
-    context.moveTo(0, y);
-    context.lineTo(BOARD_WIDTH, y);
-  }
-  context.strokeStyle = "black";
-  context.stroke();
 
   for (var row_i = 0; row_i < BOARD_SIZE; row_i++) {
     var row = $("<tr></tr>");
@@ -161,11 +151,66 @@ function isValidCrush() {
 }
 
 // draws an arrow using canvas
-function drawArrow(startX, startY, size) {
-  var canvas = document.getElementById("gameTable");
+function drawArrow(x_coord, y_coord, direction, size) {
+  var canvas = document.getElementById("gameCanvas");
   var context = canvas.getContext("2d");
-  context.moveTo(startX, startY);
-
+  // clear canvas before drawing another arrow
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  var startX = x_coord * size;
+  var startY = y_coord * size;
+  context.beginPath();
+  switch(direction) {
+    case "up": {
+      startY = startY + size/6;
+      context.moveTo(startX + size/3, startY);
+      context.lineTo(startX + size/3, startY - size/6);
+      context.lineTo(startX + size/8, startY - size/6);
+      context.lineTo(startX + size/2, startY - size/3);
+      context.lineTo(startX + 7*size/8, startY - size/6);
+      context.lineTo(startX + 2*size/3, startY - size/6);
+      context.lineTo(startX + 2*size/3, startY);
+      break;
+    }
+    case "down": {
+      // move y-coord to bottom of box
+      startY = startY + 5*size/6;
+      context.moveTo(startX + size/3, startY);
+      context.lineTo(startX + size/3, startY + size/6);
+      context.lineTo(startX + size/8, startY + size/6);
+      context.lineTo(startX + size/2, startY + size/3);
+      context.lineTo(startX + 7*size/8, startY + size/6);
+      context.lineTo(startX + 2*size/3, startY + size/6);
+      context.lineTo(startX + 2*size/3, startY);
+      break;
+    }
+    case "left": {
+      // move x-coord to left of box
+      startX = startX + size/6;
+      context.moveTo(startX, startY + size/3);
+      context.lineTo(startX - size/6, startY + size/3);
+      context.lineTo(startX - size/6, startY + size/8);
+      context.lineTo(startX - size/3, startY + size/2);
+      context.lineTo(startX - size/6, startY + 7*size/8);
+      context.lineTo(startX - size/6, startY + 2*size/3);
+      context.lineTo(startX, startY + 2*size/3);
+      break;
+    }
+    case "right": {
+      // move x-coord to right of box
+      startX = startX + 5*size/6;
+      context.moveTo(startX, startY + size/3);
+      context.lineTo(startX + size/6, startY + size/3);
+      context.lineTo(startX + size/6, startY + size/8);
+      context.lineTo(startX + size/3, startY + size/2);
+      context.lineTo(startX + size/6, startY + 7*size/8);
+      context.lineTo(startX + size/6, startY + 2*size/3);
+      context.lineTo(startX, startY + 2*size/3);
+      break;
+    }
+  }
+  context.closePath();
+  context.fill();
+  context.stroke();
 }
 
 /* Event Handlers */
@@ -254,9 +299,16 @@ $(document).on('click', "#newGameButton", function(evt)
 {
   board.clear();
   rules.prepareNewGame();
+  var canvas = document.getElementById("gameCanvas");
+  var context = canvas.getContext("2d");
+  context.clearRect(0, 0, canvas.width, canvas.height);
 });
 
 $(document).on('click', ".arrowButton", function(evt) {
+  var canvas = document.getElementById("gameCanvas");
+  var context = canvas.getContext("2d");
+  context.clearRect(0, 0, canvas.width, canvas.height);
+
   var direction = $(this).attr('id');
   var coordVal = $("#moveCoord").val().toLowerCase();
   var candy = getCandyFromCoord(coordVal);
@@ -273,6 +325,10 @@ $(document).on('click', ".arrowButton", function(evt) {
 });
 
 $(document).on('click', "#crush", function(evt) {
+  var canvas = document.getElementById("gameCanvas");
+  var context = canvas.getContext("2d");
+  context.clearRect(0, 0, canvas.width, canvas.height);
+
   var candyCrushes = rules.getCandyCrushes();
   rules.removeCrushes(candyCrushes);
   // 500 ms timeout before shifting candies down
@@ -293,9 +349,10 @@ $(document).on('click', "#crush", function(evt) {
 $(document).on('click', '#showMoveButton', function(evt) {
   var move = rules.getRandomValidMove();
   var candy = move.candy;
-  var canvas = document.getElementById("gameTable");
+  var canvas = document.getElementById("gameCanvas");
   var context = canvas.getContext("2d");
-
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  drawArrow(candy.col, candy.row, move.direction, BOARD_WIDTH/BOARD_SIZE);
 });
 
 // keyboard events arrive here
