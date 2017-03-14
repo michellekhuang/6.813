@@ -25,15 +25,28 @@
 #gameTable {
 	width: 320px;
 	height: 320px;
-	//margin: auto;
+  position: absolute;
 }
 
 #gameCanvas {
   width: 320px;
   height: 320px;
-  margin: auto;
-  z-index: -1;
   position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+
+#canvasOverlay {
+  width: 320px;
+  height: 320px;
+  position: absolute;
+  pointer-events: none;
+}
+
+#gameContainer {
+  width: 320px;
+  height: 320px;
+  margin: auto;
 }
 
 #arrows {
@@ -63,15 +76,9 @@
 
 .boardCell {
 	text-align: center;
-	border: 1px solid black;
+	border: 1px solid grey;
 	color: white;
   //border-radius: 6px;
-  display: inline-block;
-}
-
-.boardCell img {
-  width: 100%;
-  height: 100%;
 }
 
 .arrowButton[disabled] {
@@ -89,12 +96,6 @@
   border-radius: 6px;
 }
 
-#canvasOverlay {
-  width: 320px;
-  height: 320px;
-  line-height: 0px;
-}
-
 #scoreLabel {
   background-color: #CD5C5C;
   color: white;
@@ -103,5 +104,5 @@
 }
 
 #column3Table {
-  height: 50%;
+  height: 100%;
 }

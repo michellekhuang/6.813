@@ -1,7 +1,7 @@
 <!--
 CandyCrush
 Your Name: Michelle Huang
-Collaborators: Jenny Liu, Eric Chen
+Collaborators: Jenny Liu, Eric Chen, Stacy Ho
 -->
 <!DOCTYPE html>
 <html>
@@ -99,17 +99,13 @@ rules = new Rules(board);
 // Final initialization entry point: the Javascript code inside this block
 // runs at the end of start-up when the page has finished loading.
 $(document).ready(function(){
-  var canvas = document.getElementById("gameCanvas");
-  var context = canvas.getContext("2d");
   var box_size = BOARD_WIDTH/BOARD_SIZE;
-
   for (var row_i = 0; row_i < BOARD_SIZE; row_i++) {
     var row = $("<tr></tr>");
     for (var col_i = 0; col_i < BOARD_SIZE; col_i++) {
       var celVal = LETTERS[col_i] + (row_i+1).toString();
       var cell = $("<td class='boardCell' id='" + LETTERS[col_i] + row_i.toString() + "' style='width:" + box_size + "px; height: " + box_size + "px;'>" + "</td>");
       row.append(cell);
-      //$("#canvasOverlay").append(cell);
     }
     $("#gameTableBody").append(row);
   }
@@ -122,20 +118,23 @@ $(document).ready(function(){
 // return the candy at location coord where coord is a string with a letter followed by a number
 function getCandyFromCoord(coord) {
   var candyToMoveCoord = coord;
-  var row = parseInt(candyToMoveCoord[1]) - 1;
+  var row = parseInt(candyToMoveCoord.slice(1)) - 1;
   var col = candyToMoveCoord.charCodeAt(0) - 'a'.charCodeAt(0);
   return  board.getCandyAt(row, col);
 }
 
 // check if an input is valid
 function isInputValid(input) {
-  if (input.length === 2) {
-    var validLetters = '[a-' + alphabet.charAt(BOARD_SIZE-1) + ']';
-    var validNumbers = '[1-' + BOARD_SIZE.toString() + ']';
-    var regex = new RegExp(validLetters + validNumbers);
-    if (input.match(regex) !== null) {
-      return true;
+  if (input.length > 2) {
+    var alphabet = 'abcdefghijklmnopqrst';
+    if (!(alphabet.slice(0, BOARD_SIZE).indexOf(input.slice(0,1) > -1))) {
+      return false;
     }
+    var row = parseInt(input.slice(1));
+    if (row < 0 || row > BOARD_SIZE) {
+      return false;
+    }
+    return true;
   } else {
     return false;
   }
@@ -213,50 +212,88 @@ function drawArrow(x_coord, y_coord, direction, size) {
   context.stroke();
 }
 
+// Add an image and remove old image at that spot
+function addImage(info) {
+  var boxSize = BOARD_WIDTH/BOARD_SIZE;
+  var xPosition = info.toCol * boxSize;
+  var yPosition = info.toRow * boxSize;
+  var img = $("<img src='graphics/" + info.candy.color + "-candy.png' id='img-" + LETTERS[info.toCol] + info.toRow.toString() +"'>");
+  $("#canvasOverlay").append(img);
+  $(img).css('top', yPosition);
+  $(img).css('left', xPosition);
+  $(img).css('position', 'absolute');
+  $(img).css('width', boxSize);
+  $(img).css('height', boxSize);
+}
+
+// Crush candies
+function crushCandies() {
+  var candyCrushes = rules.getCandyCrushes();
+  // 500 ms timeout before shifting candies down
+  setTimeout(function() {
+    rules.removeCrushes(candyCrushes);
+    rules.moveCandiesDown();
+  }, 500);
+  if (isValidCrush()) {
+    setTimeout(function() {
+      crushCandies();
+    }, 600);
+  }
+}
+
 /* Event Handlers */
 // access the candy object with info.candy
 
 // add a candy to the board
 $(board).on('add', function(e, info)
 {
-  var cell = $("#" + LETTERS[info.toCol] + info.toRow.toString());
-  cell.html("");
-  cell.append($("<img src='graphics/" + info.candy.color + "-candy.png'>"));
-
-  if (info.candy.color === "#FFFF66") {
-    cell.css("color", "grey");
+  var boxSize = BOARD_WIDTH/BOARD_SIZE;
+  var xPosition = info.toCol * boxSize;
+  var yPosition = info.toRow * boxSize;
+  // Candy should drop down if it already exists on the board
+  if (info.fromRow !== undefined && info.fromCol !== undefined) {
+    var img;
+    if (info.fromRow < 0) {
+      img = $("<img src='graphics/" + info.candy.color + "-candy.png' id='img-" + LETTERS[info.toCol] + info.toRow.toString() + "'>");
+      $("#canvasOverlay").append(img);
+      $(img).css('left', xPosition);
+      $(img).css('top', info.fromRow * boxSize);
+      $(img).css('position', 'absolute');
+      $(img).css('width', boxSize);
+      $(img).css('height', boxSize);
+      $(img).animate({'top': yPosition}, '500', 'swing');
+    } else {
+      img = $("#img-" + LETTERS[info.fromCol] + info.fromRow.toString());
+      $(img).animate({'top': yPosition}, '500', 'swing');
+    }
   } else {
-    cell.css("color", "white");
+    addImage(info);
   }
-  
 });
 
 // move a candy on the board
 $(board).on('move', function(e, info)
 {
-  var cell = $("#" + LETTERS[info.toCol] + info.toRow.toString());
-  cell.html("");
-  cell.append($("<img src='graphics/" + info.candy.color + "-candy.png'>"));
-
-  if (info.candy.color === "#FFFF66") {
-    cell.css("color", "grey");
-  } else {
-    cell.css("color", "white");
-  }
-
-  // Check if crush once button should be enabled
-  if (!isValidCrush()) {
-    $("#crush").attr("disabled", "true");
-  } else {
-    $("#crush").removeAttr("disabled");
-  }
+  var boxSize = BOARD_WIDTH/BOARD_SIZE;
+  var xPosition = info.toCol * boxSize;
+  var yPosition = info.toRow * boxSize;
+  var img = $("#img-" + LETTERS[info.fromCol] + info.fromRow.toString());
+  $(img).animate({'top': yPosition, 'left': xPosition}, '500', 'swing');
+  
+  // swap image ids
+  setTimeout(function() {
+    $(img).attr('id', "img-" + LETTERS[info.toCol] + info.toRow.toString());
+  }, 5);
 });
 
 // remove a candy from the board
 $(board).on('remove', function(e, info)
 {
-  var cell = $("#" + LETTERS[info.fromCol] + info.fromRow.toString());
-  cell.html("");
+  var img = $("#img-" + LETTERS[info.fromCol] + info.fromRow.toString());
+  $(img).remove();
+  //$(img).fadeOut(150, function() {
+    //$(this).remove();
+  //});
 });
 
 // update the score after each crush
@@ -280,7 +317,7 @@ $(board).on('scoreUpdate', function(e, info)
 $(document).on('click', ".boardCell", function(evt) {
   id = $(this).attr('id');
   $(".arrowButton").attr("disabled", "true");
-  $("#moveCoord").val(id[0] + (parseInt(id[1])+1).toString());
+  $("#moveCoord").val(id[0] + (parseInt(id.slice(1))+1).toString());
   var candy = getCandyFromCoord($("#moveCoord").val());
   if (isValidCrush()) {
     $(".arrowButton").attr("disabled", "true");
@@ -322,28 +359,10 @@ $(document).on('click', ".arrowButton", function(evt) {
   if (!isInputValid($("#moveCoord").val())) {
     $(".arrowButton").attr("disabled", "true");
   }
-});
 
-$(document).on('click', "#crush", function(evt) {
-  var canvas = document.getElementById("gameCanvas");
-  var context = canvas.getContext("2d");
-  context.clearRect(0, 0, canvas.width, canvas.height);
-
-  var candyCrushes = rules.getCandyCrushes();
-  rules.removeCrushes(candyCrushes);
-  // 500 ms timeout before shifting candies down
-  setTimeout(function() {
-    rules.moveCandiesDown();
-  }, 500);
-
-  // Check if new crushes are available after moving
-  setTimeout(function() {
-    if (isValidCrush()) {
-      $("#crush").removeAttr("disabled");
-    } else {
-      $("#crush").attr("disabled", "true");
-    }
-  }, 500);
+  if (isValidCrush()) {
+    crushCandies();
+  }
 });
 
 $(document).on('click', '#showMoveButton', function(evt) {
@@ -403,11 +422,11 @@ $(document).on('keyup', '#moveCoord', function(evt) {
         <!-- Column 2 Code Here -->
         <canvas id="gameCanvas" width = "320" height="320">
         </canvas>
-          <table id="gameTable">
-            <tbody id="gameTableBody">
-            </tbody>
-          </table>
-          <div id="canvasOverlay">
+        <table id="gameTable">
+          <tbody id="gameTableBody">
+          </tbody>
+        </table>
+        <div id="canvasOverlay">
         </div>
       </div>
     </div>
@@ -445,12 +464,6 @@ $(document).on('keyup', '#moveCoord', function(evt) {
                   </tr>
                 </tbody>
               </table>
-            </td>
-          </tr>
-
-          <tr>
-            <td>
-              <input class="btn" type="button" value="Crush Once" id="crush" disabled="true">
             </td>
           </tr>
         </tbody>
