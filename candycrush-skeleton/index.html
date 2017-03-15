@@ -79,9 +79,10 @@ var board;
 var rules;
 
 // initialize board
-if ($.getUrlVar('size') && $.getUrlVar('size') >= 3 && $.getUrlVar('size') <= 20) {
-  board = new Board($.getUrlVar('size'));
-  BOARD_SIZE = $.getUrlVar('size');
+var url_board_size = parseInt($.getUrlVar('size'));
+if (url_board_size >= 3 && url_board_size <= 20) {
+  board = new Board(url_board_size);
+  BOARD_SIZE = url_board_size;
 } else {
   board = new Board(DEFAULT_BOARD_SIZE);
   BOARD_SIZE = DEFAULT_BOARD_SIZE;
@@ -160,50 +161,50 @@ function drawArrow(x_coord, y_coord, direction, size) {
   context.beginPath();
   switch(direction) {
     case "up": {
-      startY = startY + size/6;
-      context.moveTo(startX + size/3, startY);
-      context.lineTo(startX + size/3, startY - size/6);
-      context.lineTo(startX + size/8, startY - size/6);
-      context.lineTo(startX + size/2, startY - size/3);
-      context.lineTo(startX + 7*size/8, startY - size/6);
-      context.lineTo(startX + 2*size/3, startY - size/6);
-      context.lineTo(startX + 2*size/3, startY);
+      startY = startY + size/4;
+      context.moveTo(startX + 3*size/8, startY);
+      context.lineTo(startX + 3*size/8, startY - size/3);
+      context.lineTo(startX + size/8, startY - size/3);
+      context.lineTo(startX + size/2, startY - 2*size/3);
+      context.lineTo(startX + 7*size/8, startY - size/3);
+      context.lineTo(startX + 5*size/8, startY - size/3);
+      context.lineTo(startX + 5*size/8, startY);
       break;
     }
     case "down": {
       // move y-coord to bottom of box
-      startY = startY + 5*size/6;
-      context.moveTo(startX + size/3, startY);
-      context.lineTo(startX + size/3, startY + size/6);
-      context.lineTo(startX + size/8, startY + size/6);
-      context.lineTo(startX + size/2, startY + size/3);
-      context.lineTo(startX + 7*size/8, startY + size/6);
-      context.lineTo(startX + 2*size/3, startY + size/6);
-      context.lineTo(startX + 2*size/3, startY);
+      startY = startY + 3*size/4;
+      context.moveTo(startX + 3*size/8, startY);
+      context.lineTo(startX + 3*size/8, startY + size/3);
+      context.lineTo(startX + size/8, startY + size/3);
+      context.lineTo(startX + size/2, startY + 2*size/3);
+      context.lineTo(startX + 7*size/8, startY + size/3);
+      context.lineTo(startX + 5*size/8, startY + size/3);
+      context.lineTo(startX + 5*size/8, startY);
       break;
     }
     case "left": {
       // move x-coord to left of box
-      startX = startX + size/6;
-      context.moveTo(startX, startY + size/3);
-      context.lineTo(startX - size/6, startY + size/3);
-      context.lineTo(startX - size/6, startY + size/8);
-      context.lineTo(startX - size/3, startY + size/2);
-      context.lineTo(startX - size/6, startY + 7*size/8);
-      context.lineTo(startX - size/6, startY + 2*size/3);
-      context.lineTo(startX, startY + 2*size/3);
+      startX = startX + size/4;
+      context.moveTo(startX, startY + 3*size/8);
+      context.lineTo(startX - size/3, startY + 3*size/8);
+      context.lineTo(startX - size/3, startY + size/8);
+      context.lineTo(startX - 2*size/3, startY + size/2);
+      context.lineTo(startX - size/3, startY + 7*size/8);
+      context.lineTo(startX - size/3, startY + 5*size/8);
+      context.lineTo(startX, startY + 5*size/8);
       break;
     }
     case "right": {
       // move x-coord to right of box
-      startX = startX + 5*size/6;
-      context.moveTo(startX, startY + size/3);
-      context.lineTo(startX + size/6, startY + size/3);
-      context.lineTo(startX + size/6, startY + size/8);
-      context.lineTo(startX + size/3, startY + size/2);
-      context.lineTo(startX + size/6, startY + 7*size/8);
-      context.lineTo(startX + size/6, startY + 2*size/3);
-      context.lineTo(startX, startY + 2*size/3);
+      startX = startX + 3*size/4;
+      context.moveTo(startX, startY + 3*size/8);
+      context.lineTo(startX + size/3, startY + 3*size/8);
+      context.lineTo(startX + size/3, startY + size/8);
+      context.lineTo(startX + 2*size/3, startY + size/2);
+      context.lineTo(startX + size/3, startY + 7*size/8);
+      context.lineTo(startX + size/3, startY + 5*size/8);
+      context.lineTo(startX, startY + 5*size/8);
       break;
     }
   }
@@ -219,6 +220,8 @@ function addImage(info) {
   var yPosition = info.toRow * boxSize;
   var img = $("<img src='graphics/" + info.candy.color + "-candy.png' id='img-" + LETTERS[info.toCol] + info.toRow.toString() +"'>");
   $("#canvasOverlay").append(img);
+
+  // set the CSS properties of image
   $(img).css('top', yPosition);
   $(img).css('left', xPosition);
   $(img).css('position', 'absolute');
@@ -232,13 +235,17 @@ function crushCandies() {
   // 500 ms timeout before shifting candies down
   setTimeout(function() {
     rules.removeCrushes(candyCrushes);
-    rules.moveCandiesDown();
-  }, 500);
-  if (isValidCrush()) {
     setTimeout(function() {
+      rules.moveCandiesDown();
+    }, 500);
+  }, 500);
+  
+  // Check if there are more valid crushes as a result of this crush
+  setTimeout(function() {
+    if (isValidCrush()) {
       crushCandies();
-    }, 600);
-  }
+    }
+  }, 1010); // 1010 ms timeout because 500ms to removeCrushes and 500ms to move candies down
 }
 
 /* Event Handlers */
@@ -254,6 +261,7 @@ $(board).on('add', function(e, info)
   if (info.fromRow !== undefined && info.fromCol !== undefined) {
     var img;
     if (info.fromRow < 0) {
+      // Create the new candy that should slide in to the board
       img = $("<img src='graphics/" + info.candy.color + "-candy.png' id='img-" + LETTERS[info.toCol] + info.toRow.toString() + "'>");
       $("#canvasOverlay").append(img);
       $(img).css('left', xPosition);
@@ -290,16 +298,17 @@ $(board).on('move', function(e, info)
 $(board).on('remove', function(e, info)
 {
   var img = $("#img-" + LETTERS[info.fromCol] + info.fromRow.toString());
-  $(img).remove();
-  //$(img).fadeOut(150, function() {
-    //$(this).remove();
-  //});
+  // Switch image id so remove doesn't interfere
+  $(img).attr('id', "rmv-" + LETTERS[info.fromCol] + info.fromRow.toString());
+  $(img).fadeOut(function() {
+    $(this).remove();
+  });
+
 });
 
 // update the score after each crush
 $(board).on('scoreUpdate', function(e, info)
 {
-  // Your code here. To be implemented in pset 2.
   var score = info.score;
   var candy = info.candy;
   $("#scoreLabel").html(score + " points");
