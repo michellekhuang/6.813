@@ -65,6 +65,7 @@ $.extend({
 var DEFAULT_BOARD_SIZE = 8;
 var BOARD_SIZE;
 var LETTERS = {};
+var COL = {};
 var BOARD_WIDTH = 320;
 var COLOR_MAP = {
   'red':'#CD5C5C',
@@ -92,6 +93,7 @@ if (url_board_size >= 3 && url_board_size <= 20) {
 var alphabet = 'abcdefghijklmnopqrst';
 for (var i = 0; i < alphabet.length; i++) {
   LETTERS[i] = alphabet.charAt(i);
+  COL[alphabet.charAt(i)] = i;
 }
 
 // load a rule
@@ -100,45 +102,135 @@ rules = new Rules(board);
 // Final initialization entry point: the Javascript code inside this block
 // runs at the end of start-up when the page has finished loading.
 $(document).ready(function(){
-  var box_size = BOARD_WIDTH/BOARD_SIZE;
-  for (var row_i = 0; row_i < BOARD_SIZE; row_i++) {
-    var row = $("<tr></tr>");
-    for (var col_i = 0; col_i < BOARD_SIZE; col_i++) {
-      var celVal = LETTERS[col_i] + (row_i+1).toString();
-      var cell = $("<td class='boardCell' id='" + LETTERS[col_i] + row_i.toString() + "' style='width:" + box_size + "px; height: " + box_size + "px;'>" + "</td>");
-      row.append(cell);
-    }
-    $("#gameTableBody").append(row);
-  }
+  drawGrid();
   // Start board
   rules.prepareNewGame();
+  var mouseDown = false;
+  var dragCandy;
+  var dragOffsetX;
+
+  
+
+  // mouse events
+  document.onmousemove = moveMouse;
+  document.onmouseup = release;
+  document.onmousedown = getCandy;
+
+  function getRowCol(event) {
+    var x = event.offsetX || event.clientX - $(event.target).offset().left;
+    var y = event.offsetY || event.clientY - $(event.target).offset().top;
+    row = Math.floor(y/(BOARD_WIDTH/BOARD_SIZE));
+    col = LETTERS[Math.floor(x/(BOARD_WIDTH/BOARD_SIZE))];
+    return col + row.toString();
+  }
+
+  function getCandy(event) {
+    if (!crushing) {
+      mouseDown = true;
+      event.preventDefault();
+      dragOffsetX = $(event.target).offset().left;
+      var coord = getRowCol(event);
+      dragCandy = $("#" + coord);
+    }
+  }
+
+  function release(event) {
+    if (dragCandy && !crushing) {
+      dragCandy.css('z-index', 0);
+      var coord = getRowCol(event);
+      var direction = getDirection(dragCandy[0].id, coord);
+      if (direction && rules.isMoveTypeValid(getCandyFromCoord(dragCandy[0].id), direction)) {
+        board.flipCandies(getCandyFromCoord(dragCandy[0].id), getCandyFromCoord(coord));
+        if (isValidCrush()) {
+          crushCandies();
+        }
+      } else {
+        row = dragCandy[0].id.slice(1);
+        col = COL[dragCandy[0].id[0]];
+        dragCandy.css('top', row * BOARD_WIDTH/BOARD_SIZE);
+        dragCandy.css('left', col * BOARD_WIDTH/BOARD_SIZE);
+      }
+    }
+    dragCandy = null;
+    mouseDown = false;
+    
+    // clear arrow
+    var canvas = document.getElementById("gameCanvas");
+    var context = canvas.getContext("2d");
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  function moveMouse(event) {
+    // disable show move button
+  if (crushing) {
+    $("#showMoveButton").attr('disabled', true);
+  } else {
+    $("#showMoveButton").removeAttr('disabled');
+  }
+    
+    if (!crushing && dragCandy && mouseDown) {
+      event.preventDefault();
+      var mouseX = event.offsetX; 
+      var mouseY = event.clientY;
+      var y = mouseY - (dragCandy[0].clientHeight/2);
+      var x = mouseX - (dragCandy[0].clientWidth/2);
+      dragCandy.css('top', y);
+      dragCandy.css('z-index', 1);
+      if (event.target !== $("#dragOverlay")[0]) {
+        x = event.clientX - dragOffsetX - (dragCandy[0].clientWidth/2);
+      }
+      dragCandy.css('left', x);
+    }
+  }
 });
 
 // Helper Functions
+// Check which direction drag is going to
+function getDirection(from, to) {
+  var fromRow = parseInt(from.slice(1));
+  var toRow = parseInt(to.slice(1));
+  var fromCol = COL[from[0]];
+  var toCol = COL[to[0]];
+  if (toRow === fromRow) {
+    if (toCol === fromCol + 1) {
+      return 'right';
+    } else if (toCol === fromCol - 1) {
+      return 'left';
+    }
+  } else if (toCol === fromCol) {
+    if (toRow === fromRow + 1) {
+      return 'down';
+    } else if (toRow === fromRow - 1) {
+      return 'up';
+    }
+  }
+  return null;
+}
+
+// Draw grid
+function drawGrid() {
+  var canvas = document.getElementById("gridCanvas");
+  var context = canvas.getContext("2d");
+  for (var col = 0; col <= BOARD_WIDTH; col += BOARD_WIDTH/BOARD_SIZE) {
+    context.moveTo(col, 0);
+    context.lineTo(col, BOARD_WIDTH);
+  }
+
+  for (var row = 0; row <= BOARD_WIDTH; row += BOARD_WIDTH/BOARD_SIZE) {
+    context.moveTo(0, row);
+    context.lineTo(BOARD_WIDTH, row);
+  }
+
+  context.strokeStyle = "grey";
+  context.stroke();
+}
 
 // return the candy at location coord where coord is a string with a letter followed by a number
 function getCandyFromCoord(coord) {
   var candyToMoveCoord = coord;
-  var row = parseInt(candyToMoveCoord.slice(1)) - 1;
+  var row = parseInt(candyToMoveCoord.slice(1));
   var col = candyToMoveCoord.charCodeAt(0) - 'a'.charCodeAt(0);
   return  board.getCandyAt(row, col);
-}
-
-// check if an input is valid
-function isInputValid(input) {
-  if (input.length > 2) {
-    var alphabet = 'abcdefghijklmnopqrst';
-    if (!(alphabet.slice(0, BOARD_SIZE).indexOf(input.slice(0,1) > -1))) {
-      return false;
-    }
-    var row = parseInt(input.slice(1));
-    if (row < 0 || row > BOARD_SIZE) {
-      return false;
-    }
-    return true;
-  } else {
-    return false;
-  }
 }
 
 // check if there is a valid candy crush available
@@ -218,20 +310,21 @@ function addImage(info) {
   var boxSize = BOARD_WIDTH/BOARD_SIZE;
   var xPosition = info.toCol * boxSize;
   var yPosition = info.toRow * boxSize;
-  var img = $("<img src='graphics/" + info.candy.color + "-candy.png' id='img-" + LETTERS[info.toCol] + info.toRow.toString() +"'>");
+  var img = $("<img class='candyimg' src='graphics/" + info.candy.color + "-candy.png' id='" + LETTERS[info.toCol] + info.toRow.toString() +"'>");
   $("#canvasOverlay").append(img);
 
   // set the CSS properties of image
   $(img).css('top', yPosition);
   $(img).css('left', xPosition);
-  $(img).css('position', 'absolute');
   $(img).css('width', boxSize);
   $(img).css('height', boxSize);
 }
 
 // Crush candies
+var crushing;
 function crushCandies() {
   var candyCrushes = rules.getCandyCrushes();
+  crushing = true;
   // 500 ms timeout before shifting candies down
   setTimeout(function() {
     rules.removeCrushes(candyCrushes);
@@ -239,10 +332,10 @@ function crushCandies() {
       rules.moveCandiesDown();
     }, 500);
   }, 500);
-  
   // Check if there are more valid crushes as a result of this crush
   setTimeout(function() {
     if (isValidCrush()) {
+      crushing = true;
       crushCandies();
     }
   }, 1010); // 1010 ms timeout because 500ms to removeCrushes and 500ms to move candies down
@@ -262,16 +355,15 @@ $(board).on('add', function(e, info)
     var img;
     if (info.fromRow < 0) {
       // Create the new candy that should slide in to the board
-      img = $("<img src='graphics/" + info.candy.color + "-candy.png' id='img-" + LETTERS[info.toCol] + info.toRow.toString() + "'>");
+      img = $("<img class='candyimg' src='graphics/" + info.candy.color + "-candy.png' id='" + LETTERS[info.toCol] + info.toRow.toString() + "'>");
       $("#canvasOverlay").append(img);
       $(img).css('left', xPosition);
       $(img).css('top', info.fromRow * boxSize);
-      $(img).css('position', 'absolute');
       $(img).css('width', boxSize);
       $(img).css('height', boxSize);
       $(img).animate({'top': yPosition}, '500', 'swing');
     } else {
-      img = $("#img-" + LETTERS[info.fromCol] + info.fromRow.toString());
+      img = $("#" + LETTERS[info.fromCol] + info.fromRow.toString());
       $(img).animate({'top': yPosition}, '500', 'swing');
     }
   } else {
@@ -282,28 +374,38 @@ $(board).on('add', function(e, info)
 // move a candy on the board
 $(board).on('move', function(e, info)
 {
+  crushing = true;
   var boxSize = BOARD_WIDTH/BOARD_SIZE;
   var xPosition = info.toCol * boxSize;
   var yPosition = info.toRow * boxSize;
-  var img = $("#img-" + LETTERS[info.fromCol] + info.fromRow.toString());
+  var img = $("#" + LETTERS[info.fromCol] + info.fromRow.toString());
   $(img).animate({'top': yPosition, 'left': xPosition}, '500', 'swing');
   
   // swap image ids
   setTimeout(function() {
-    $(img).attr('id', "img-" + LETTERS[info.toCol] + info.toRow.toString());
+    $(img).attr('id', LETTERS[info.toCol] + info.toRow.toString());
   }, 5);
+
+  setTimeout(function() {
+    crusing = false;
+  }, 500);
+
 });
 
 // remove a candy from the board
 $(board).on('remove', function(e, info)
 {
-  var img = $("#img-" + LETTERS[info.fromCol] + info.fromRow.toString());
+  crushing = true;
+  var img = $("#" + LETTERS[info.fromCol] + info.fromRow.toString());
   // Switch image id so remove doesn't interfere
   $(img).attr('id', "rmv-" + LETTERS[info.fromCol] + info.fromRow.toString());
   $(img).fadeOut(function() {
     $(this).remove();
   });
-
+  
+  setTimeout(function() {
+    crushing = false;
+  }, 600);
 });
 
 // update the score after each crush
@@ -322,24 +424,6 @@ $(board).on('scoreUpdate', function(e, info)
   }
 });
 
-// Image Events
-$(document).on('click', ".boardCell", function(evt) {
-  id = $(this).attr('id');
-  $(".arrowButton").attr("disabled", "true");
-  $("#moveCoord").val(id[0] + (parseInt(id.slice(1))+1).toString());
-  var candy = getCandyFromCoord($("#moveCoord").val());
-  if (isValidCrush()) {
-    $(".arrowButton").attr("disabled", "true");
-  } else {
-    $(".arrowButton").each(function() {
-      var direction = $(this).attr("id");
-      if (rules.isMoveTypeValid(candy, direction)) {
-        $(this).removeAttr("disabled");
-      }
-    })
-  }
-});
-
 // Button Events
 $(document).on('click', "#newGameButton", function(evt)
 {
@@ -350,30 +434,6 @@ $(document).on('click', "#newGameButton", function(evt)
   context.clearRect(0, 0, canvas.width, canvas.height);
 });
 
-$(document).on('click', ".arrowButton", function(evt) {
-  var canvas = document.getElementById("gameCanvas");
-  var context = canvas.getContext("2d");
-  context.clearRect(0, 0, canvas.width, canvas.height);
-
-  var direction = $(this).attr('id');
-  var coordVal = $("#moveCoord").val().toLowerCase();
-  var candy = getCandyFromCoord(coordVal);
-  if (rules.isMoveTypeValid(candy, direction)) {
-    board.flipCandies(candy, board.getCandyInDirection(candy, direction));
-  }
-
-  // Clear text field
-  $("#moveCoord").val("");
-  $("#moveCoord").focus();
-  if (!isInputValid($("#moveCoord").val())) {
-    $(".arrowButton").attr("disabled", "true");
-  }
-
-  if (isValidCrush()) {
-    crushCandies();
-  }
-});
-
 $(document).on('click', '#showMoveButton', function(evt) {
   var move = rules.getRandomValidMove();
   var candy = move.candy;
@@ -382,23 +442,6 @@ $(document).on('click', '#showMoveButton', function(evt) {
   context.clearRect(0, 0, canvas.width, canvas.height);
   drawArrow(candy.col, candy.row, move.direction, BOARD_WIDTH/BOARD_SIZE);
 });
-
-// keyboard events arrive here
-$(document).on('keyup', '#moveCoord', function(evt) {
-  var coordVal = $("#moveCoord").val().toLowerCase();
-  if (!isInputValid(coordVal) || isValidCrush()) {
-    $(".arrowButton").attr("disabled", "true");
-  } else {
-    var candy = getCandyFromCoord(coordVal);
-    $(".arrowButton").each(function() {
-      var direction = $(this).attr("id");
-      if (rules.isMoveTypeValid(candy, direction)) {
-        $(this).removeAttr('disabled');
-      }
-    }) 
-  }
-});
-
 
 </script>
 
@@ -429,55 +472,14 @@ $(document).on('keyup', '#moveCoord', function(evt) {
     <div class="col-md-6" id="mainColumn">
       <div id="gameContainer">
         <!-- Column 2 Code Here -->
+        <div id="dragOverlay" ></div>
+        <canvas id="gridCanvas" width = "320" height="320">
+        </canvas>
         <canvas id="gameCanvas" width = "320" height="320">
         </canvas>
-        <table id="gameTable">
-          <tbody id="gameTableBody">
-          </tbody>
-        </table>
         <div id="canvasOverlay">
         </div>
       </div>
-    </div>
-
-    <div class="col-md-3" id="lastColumn">
-
-      <!-- Column 3 Code Here -->
-      <table id="column3Table">
-        <tbody>
-          <tr>
-            <td>
-              <span><b>Move:</b></span>
-              <input id="moveCoord"/>
-            </td>
-          </tr>
-
-          <tr>
-            <td>
-              <table id="arrows">
-                <tbody>
-                  <tr>
-                    <td></td>
-                    <td><input class="btn arrowButton" type="button" value="&#8593;" id="up" disabled="true"/></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input class="btn arrowButton" type="button" value="&#8592;" id="left" disabled="true"/></td>
-                    <td></td>
-                    <td><input class="btn arrowButton" type="button" value="&#8594;" id="right" disabled="true"/></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td><input class="btn arrowButton" type="button" value="&#8595;" id="down" disabled="true"/></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-        </tbody>
-      </table>    
-
     </div>
   </div> <!-- class="row" -->
 </div> <!-- class="container" -->

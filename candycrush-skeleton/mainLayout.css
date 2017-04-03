@@ -15,17 +15,10 @@
   vertical-align: center;
 }
 
-#lastColumn {
-  vertical-align: center;
-	padding-left: 10px;
-	text-align: center;
-  color: #CD5C5C;
-}
-
-#gameTable {
-	width: 320px;
-	height: 320px;
-  position: absolute;
+#gridCanvas {
+  position:absolute;
+  pointer-events: none;
+  z-index: -1;
 }
 
 #gameCanvas {
@@ -40,23 +33,20 @@
   width: 320px;
   height: 320px;
   position: absolute;
-  pointer-events: none;
+}
+
+#dragOverlay {
+  z-index: 2;
+  width: 320px;
+  height: 320px;
+  position: absolute;
 }
 
 #gameContainer {
   width: 320px;
   height: 320px;
   margin: auto;
-}
-
-#arrows {
-	margin: auto;
-}
-
-#column3Table {
-	width:100%;
-	height:100%;
-  text-align: center;
+  position: relative;
 }
 
 .btn[disabled] {
@@ -74,28 +64,6 @@
   margin: 10px;
 }
 
-.boardCell {
-	text-align: center;
-	border: 1px solid grey;
-	color: white;
-  //border-radius: 6px;
-}
-
-.arrowButton[disabled] {
-  background-color:lightgrey; 
-  color: black;
-}
-
-.arrowButton:not([disabled]) {
-  background-color: #87CEFA;
-  color: white;
-}
-
-#moveCoord {
-  width: 30px;
-  border-radius: 6px;
-}
-
 #scoreLabel {
   background-color: #CD5C5C;
   color: white;
@@ -103,6 +71,8 @@
   border-radius: 3px;
 }
 
-#column3Table {
-  height: 100%;
+.candyimg {
+  position: absolute;
+  z-index: 0;
 }
+
