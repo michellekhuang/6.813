@@ -1,0 +1,207 @@
+/* line 3, scss/sidebar.scss */
+.container-fluid {
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* line 8, scss/sidebar.scss */
+html {
+  height: 100%;
+  overflow-y: none;
+}
+
+/* line 13, scss/sidebar.scss */
+body {
+  height: calc(100% - 10px);
+  overflow-y: none;
+}
+
+/* line 17, scss/sidebar.scss */
+body .main-content-row {
+  height: calc(100% - 80px);
+}
+
+/* line 21, scss/sidebar.scss */
+body #main-content {
+  height: 100%;
+}
+
+/* line 23, scss/sidebar.scss */
+body #main-content tbody {
+  height: 100%;
+}
+
+/* line 25, scss/sidebar.scss */
+body #main-content tbody tr {
+  height: 100%;
+}
+
+/* line 32, scss/sidebar.scss */
+#sidebar {
+  position: relative;
+  border-right: 1px solid lightgray;
+  height: 100%;
+  width: 400px;
+  min-width: 400px;
+  text-align: center;
+  vertical-align: top;
+}
+
+/* line 41, scss/sidebar.scss */
+#sidebar #button-row {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  height: 90px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+/* line 50, scss/sidebar.scss */
+#sidebar #button-row .new-button, #sidebar #button-row #walkInButton, #sidebar #button-row #reservationButton {
+  text-align: center;
+  width: 45%;
+  height: 60px;
+  overflow: hidden;
+  display: block;
+  margin: auto;
+  margin-top: 10px;
+  display: inline-block;
+  border-radius: 6px;
+  color: white;
+  border: none;
+  box-shadow: 0px 1px 2px lightgray;
+}
+
+/* line 65, scss/sidebar.scss */
+#sidebar #button-row #walkInButton {
+  float: left;
+  background-color: #DD7D78;
+}
+
+/* line 70, scss/sidebar.scss */
+#sidebar #button-row #walkInButton:hover {
+  background-color: #BC6462;
+}
+
+/* line 75, scss/sidebar.scss */
+#sidebar #button-row #reservationButton {
+  float: right;
+  background-color: #5DA0C1;
+}
+
+/* line 80, scss/sidebar.scss */
+#sidebar #button-row #reservationButton:hover {
+  background-color: #4082A3;
+}
+
+/* line 86, scss/sidebar.scss */
+#sidebar #inner-table {
+  position: relative;
+  height: calc(100% - 90px);
+}
+
+/* line 91, scss/sidebar.scss */
+#sidebar #inner-table #walkInOuterContainer {
+  position: relative;
+  vertical-align: top;
+  height: 50%;
+}
+
+/* line 96, scss/sidebar.scss */
+#sidebar #inner-table #walkInOuterContainer #walkInContainer {
+  position: absolute;
+  height: calc(100% - 42px);
+  width: 100%;
+  overflow-y: scroll;
+}
+
+/* line 104, scss/sidebar.scss */
+#sidebar #inner-table #reservationOuterContainer {
+  position: relative;
+  vertical-align: top;
+  height: 50%;
+}
+
+/* line 109, scss/sidebar.scss */
+#sidebar #inner-table #reservationOuterContainer #reservationContainer {
+  position: absolute;
+  height: calc(100% - 42px);
+  width: 100%;
+  overflow-y: scroll;
+}
+
+/* line 119, scss/sidebar.scss */
+.containerLabel {
+  font-weight: bold;
+  color: red;
+}
+
+/* line 124, scss/sidebar.scss */
+.placeholder {
+  height: 45px;
+  background-color: white;
+  border: 4px solid #DD7D78;
+  color: #505050;
+  border-radius: 10px;
+  margin: auto;
+  margin-bottom: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  box-shadow: 0px 1px 2px lightgray;
+  margin-right: 5px;
+  margin-left: 5px;
+  cursor: move !important;
+}
+
+/* line 141, scss/sidebar.scss */
+.placeholder .close {
+  float: left;
+  transform: translate(-10px, 0);
+  color: #444444;
+}
+
+/* line 147, scss/sidebar.scss */
+.placeholder .close:hover {
+  color: black;
+}
+
+/* line 154, scss/sidebar.scss */
+.reservation-placeholder {
+  border: 4px solid #5DA0C1;
+}
+
+/* line 158, scss/sidebar.scss */
+.inner-placeholder-name {
+  width: 40%;
+  float: left;
+  text-align: left;
+  cursor: move;
+  pointer-events: none;
+}
+
+/* line 166, scss/sidebar.scss */
+.btn.btn-secondary.bubble-btn {
+  float: right;
+  height: 100%;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* line 175, scss/sidebar.scss */
+.inner-placeholder-size {
+  pointer-events: none;
+}
+
+/* line 179, scss/sidebar.scss */
+.btn {
+  cursor: pointer;
+}
+
+/* line 183, scss/sidebar.scss */
+.data {
+  visibility: hidden;
+}

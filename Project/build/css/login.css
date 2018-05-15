@@ -1,0 +1,51 @@
+/* line 3, scss/login.scss */
+.login-page {
+  background-image: url("../../img/tabletop-background.png");
+  height: 100%;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  opacity: 1;
+  z-index: 100;
+}
+
+/* line 17, scss/login.scss */
+.login-page #title {
+  position: absolute;
+  height: 150px;
+  width: 600px;
+  top: calc(30% - 75px);
+  left: calc(50% - 300px);
+}
+
+/* line 31, scss/login.scss */
+.login-page #login-button {
+  position: absolute;
+  top: calc(55% - 30px);
+  left: calc(50% - 10%);
+  height: 60px;
+  width: 20%;
+  display: table;
+  font-size: 150%;
+  border-radius: 10px;
+  border-width: 0px;
+  background-color: #5DA0C1;
+}
+
+/* line 44, scss/login.scss */
+.login-page #login-button span {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+/* line 53, scss/login.scss */
+.login-page #login-button:hover {
+  background-color: #4082A3;
+}
+
+/* line 56, scss/login.scss */
+.login-page #login-button:hover:disabled {
+  cursor: default;
+}

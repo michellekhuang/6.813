@@ -1,0 +1,242 @@
+/* line 1, scss/modules/popup.scss */
+.popup, .calendar-container {
+  margin: auto;
+}
+
+/* line 5, scss/modules/popup.scss */
+.not-selectable, .calendar-container .calendar .header .next-prev-month, .calendar-container .calendar .header #prev-month, .calendar-container .calendar .header #next-month, .calendar-container .calendar .header .header-title, .calendar-container .calendar #days .cal-box .day, .calendar-container .calendar #days .cal-box .noday, .calendar-container .schedule .availability-title {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* line 7, scss/calendar.scss */
+.calendar-container .modal-header {
+  background-color: #5DA0C1;
+  color: white;
+}
+
+/* line 10, scss/calendar.scss */
+.calendar-container .modal-header h1 {
+  padding-left: 10px;
+}
+
+/* line 14, scss/calendar.scss */
+.calendar-container .modal-content {
+  border-radius: 10px;
+  border-color: #5DA0C1;
+  border-width: 5px;
+}
+
+/* line 19, scss/calendar.scss */
+.calendar-container .btn-set {
+  background-color: #5DA0C1;
+  border: 3px solid #5DA0C1;
+}
+
+/* line 23, scss/calendar.scss */
+.calendar-container .btn-set:hover {
+  background-color: #4082A3;
+  border: 3px solid #4082A3;
+}
+
+/* line 29, scss/calendar.scss */
+.calendar-container .modal-content {
+  height: 100%;
+}
+
+/* line 33, scss/calendar.scss */
+.calendar-container ul {
+  list-style-type: none;
+}
+
+/* line 37, scss/calendar.scss */
+.calendar-container .row {
+  height: 100%;
+}
+
+/* line 42, scss/calendar.scss */
+.calendar-container .calendar .header {
+  padding: 20px 20px;
+  margin-bottom: 0px;
+}
+
+/* line 45, scss/calendar.scss */
+.calendar-container .calendar .header:hover {
+  cursor: default;
+}
+
+/* line 49, scss/calendar.scss */
+.calendar-container .calendar .header .next-prev-month, .calendar-container .calendar .header #prev-month, .calendar-container .calendar .header #next-month {
+  color: black;
+}
+
+/* line 52, scss/calendar.scss */
+.calendar-container .calendar .header .next-prev-month:hover, .calendar-container .calendar .header #prev-month:hover, .calendar-container .calendar .header #next-month:hover {
+  cursor: pointer;
+}
+
+/* line 56, scss/calendar.scss */
+.calendar-container .calendar .header #prev-month {
+  float: left;
+}
+
+/* line 60, scss/calendar.scss */
+.calendar-container .calendar .header #next-month {
+  float: right;
+}
+
+/* line 65, scss/calendar.scss */
+.calendar-container .calendar .header .header-title {
+  text-align: center;
+  font-size: 15pt;
+  color: #505050;
+}
+
+/* line 70, scss/calendar.scss */
+.calendar-container .calendar .header .header-title:hover {
+  cursor: default;
+}
+
+/* line 76, scss/calendar.scss */
+.calendar-container .calendar .weekdays {
+  padding-left: 0px;
+  margin-bottom: 5px;
+}
+
+/* line 80, scss/calendar.scss */
+.calendar-container .calendar .weekdays li {
+  display: inline-block;
+  width: calc(100% / 7);
+  text-align: center;
+  color: #505050;
+  margin: -2px -2px;
+}
+
+/* line 89, scss/calendar.scss */
+.calendar-container .calendar #days {
+  height: 400px;
+}
+
+/* line 92, scss/calendar.scss */
+.calendar-container .calendar #days .cal-box {
+  position: relative;
+  display: inline-block;
+  width: calc(100% / 7);
+  height: 60px;
+  text-align: center;
+  border: 2px solid white;
+}
+
+/* line 101, scss/calendar.scss */
+.calendar-container .calendar #days .cal-box .day {
+  height: 100%;
+}
+
+/* line 105, scss/calendar.scss */
+.calendar-container .calendar #days .cal-box .day.clickable {
+  background-color: #ADEA9B;
+  -webkit-transition-property: background-color;
+  transition-property: background-color;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+
+/* line 107, scss/calendar.scss */
+.calendar-container .calendar #days .cal-box .day.clickable:hover {
+  background-color: #85E869;
+  cursor: pointer;
+}
+
+/* line 111, scss/calendar.scss */
+.calendar-container .calendar #days .cal-box .day.clickable.selected {
+  background-color: #50B734;
+}
+
+/* line 119, scss/calendar.scss */
+.calendar-container .calendar #days .cal-box .day.today {
+  background-color: #5DA0C1;
+}
+
+/* line 121, scss/calendar.scss */
+.calendar-container .calendar #days .cal-box .day.today:hover {
+  background-color: #4082A3;
+  cursor: pointer;
+}
+
+/* line 125, scss/calendar.scss */
+.calendar-container .calendar #days .cal-box .day.today.selected {
+  background-color: #50B734;
+}
+
+/* line 129, scss/calendar.scss */
+.calendar-container .calendar #days .cal-box .day.nonclickable {
+  background-color: lightgray;
+}
+
+/* line 131, scss/calendar.scss */
+.calendar-container .calendar #days .cal-box .day.nonclickable:hover {
+  cursor: default;
+}
+
+/* line 136, scss/calendar.scss */
+.calendar-container .calendar #days .cal-box .noday {
+  opacity: 0;
+  height: 100%;
+}
+
+/* line 140, scss/calendar.scss */
+.calendar-container .calendar #days .cal-box .noday:hover {
+  cursor: default;
+}
+
+/* line 149, scss/calendar.scss */
+.calendar-container .schedule .availability-title {
+  position: relative;
+  text-align: center;
+  font-size: 15pt;
+  color: #505050;
+  top: 20px;
+  margin: 20px;
+}
+
+/* line 157, scss/calendar.scss */
+.calendar-container .schedule .availability-title:hover {
+  cursor: default;
+}
+
+/* line 162, scss/calendar.scss */
+.calendar-container .schedule .open-times-container {
+  height: 450px;
+  padding: 10px 10px;
+  overflow-y: scroll;
+}
+
+/* line 168, scss/calendar.scss */
+.calendar-container .schedule .time-slot {
+  position: relative;
+  height: 50px;
+  width: 90%;
+  text-align: center;
+  margin-top: 10px;
+  left: 5%;
+  background-color: #5DA0C1;
+}
+
+/* line 178, scss/calendar.scss */
+.calendar-container .schedule .time-slot:hover {
+  cursor: pointer;
+  background-color: #4082A3;
+}
+
+/* line 183, scss/calendar.scss */
+.calendar-container .schedule .time-slot.selected {
+  background-color: #4082A3;
+}
+
+/* line 190, scss/calendar.scss */
+.calendar-container #save-btn.disabled {
+  background-color: grey;
+  border-color: grey;
+}

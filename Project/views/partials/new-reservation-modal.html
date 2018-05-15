@@ -1,0 +1,78 @@
+<div class="modal" id='reservation-div' role="dialog" tabindex="-1" aria-labelledby="reservation-modal">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title app-text" id="reservation-modal">New Reservation</h1>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-4">
+                    <span class="label app-text">Name:</span>
+                  </div>
+                  <div class="col-md-8">
+                    <input id="reservation-name" required>
+                    <p class="error" id="reservation-name-error"></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <span class="label app-text">Party Size:</span>
+                  </div>
+                  <div class="col-md-8">
+                    <select class="select-style" id="reservation-party-size" required>
+                      <option value=""></option>
+                    </select>
+                    <p class="error" id="reservation-party-size-error"></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <span class="label app-text">Date/Time:</span>
+                  </div>
+                  <div class="col-md-8">
+                    <button type="button"
+                            class="btn"
+                            data-toggle="modal"
+                            data-target=".calendar-container"
+                            id="reservation-datetime-btn">Select</button>
+                    <p id="reservation-date"></p>
+                    <p class="error" id="reservation-datetime-error"></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <span class="label app-text">Cell:</span>
+                  </div>
+                  <div class="col-md-8">
+                    <input class="phone" id="reservation-cell" placeholder="(___) ___-____" required>
+                    <p class="error" id="reservation-cell-error">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <span class="label app-text">Comments:</span>
+                  </div>
+                  <div class="col-md-8">
+                    <textarea id="reservation-comments" rows="5" cols="30" placeholder="Indicate party size if 12+"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button"
+                class="btn btn-default btn-lg btn-cancel"
+                id="reservation-cancel-btn">Cancel</button>
+        <button type="button"
+                class="btn btn-primary btn-lg btn-set"
+                id="reservation-set-btn">Set</button>
+      </div>
+    </div>
+  </div>
+</div>

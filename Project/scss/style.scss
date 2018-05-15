@@ -1,0 +1,70 @@
+@import './modules/popup';
+@import './modules/colors';
+
+@import './animista/scale-up-down';
+@import './animista/login-transition';
+
+@import './sidebar';
+@import './map';
+@import './forms';
+@import './calendar';
+
+@import './login';
+
+.homepage-container {
+  display: none;
+  z-index: 0;
+}
+
+#header {
+  height: 80px;
+  border-bottom: 1px solid $border-color;
+  padding-left: 10px;
+
+  img {
+    padding: 10px;
+    height: 100%;
+    width: 250px;
+  }
+}
+
+body {
+  font-family: 'Helvetica' !important;
+}
+
+@font-face {
+  font-family: robotothin;
+  src: url(roboto/roboto-thin.ttf);
+}
+
+.ui-draggable-helper {
+  width: 388px;
+}
+
+.app-text {
+  @extend .not-selectable;
+  &:hover {
+    cursor: default;
+  }
+}
+
+.modal {
+  textarea {
+    border: grey solid 1px;
+    overflow: auto;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+  }
+}
+
+table {
+  height: 100%;
+  width: 100%;
+}
+
+#sidebar {
+  width: 400px;
+}

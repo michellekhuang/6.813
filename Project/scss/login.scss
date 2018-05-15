@@ -1,0 +1,61 @@
+@import './modules/colors';
+
+.login-page {
+  background-image: url("../../img/tabletop-background.png");
+
+  height: 100%;
+  width: 100%;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  position: absolute;
+  opacity: 1;
+  z-index: 100;
+
+  #title {
+    position: absolute;
+
+    $height: 150px;
+    $width: 600px;
+
+    height: $height;
+    width: $width;
+
+    top: calc(30% - #{$height / 2});
+    left: calc(50% - #{$width / 2});
+
+  }
+
+  #login-button {
+    $height: 60px;
+    $width: 20%;
+
+    position: absolute;
+    top: calc(55% - #{$height / 2});
+    left: calc(50% - #{$width / 2});
+
+    height: $height;
+    width: $width;
+
+    display: table;
+    font-size: 150%;
+    span {
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    border-radius: 10px;
+    border-width: 0px;
+
+    background-color: $reservation-color;
+    &:hover {
+      background-color: $reservation-hover-color;
+
+      &:disabled {
+        cursor: default;
+      }
+    }
+  }
+}

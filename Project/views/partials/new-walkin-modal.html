@@ -1,0 +1,64 @@
+<div class="modal" id="walkin-div" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title app-text">New Walk-In</h1>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-4">
+                    <span class="label app-text">Name:</span>
+                  </div>
+                  <div class="col-md-8">
+                    <input id="walkin-name" required>
+                    <p class="error" id="walkin-name-error"></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <span class="label app-text">Party Size:</span>
+                  </div>
+                  <div class="col-md-8">
+                    <select class="select-style" id="walkin-party-size" required>
+                      <option value=""></option>
+                    </select>
+                    <p class="error" id="walkin-party-size-error"></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <span class="label app-text">Cell:</span>
+                  </div>
+                  <div class="col-md-8">
+                    <input class="phone" id="walkin-cell" placeholder="(___) ___-____" required>
+                    <p class="error" id="walkin-cell-error"></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <span class="label app-text">Comments:</span>
+                  </div>
+                  <div class="col-md-8">
+                    <textarea id="walkin-comments" rows="5" cols="30" placeholder="Indicate party size if 12+"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button"
+                class="btn btn-default btn-lg btn-cancel"
+                id="walkin-cancel-btn">Cancel</button>
+        <button type="button"
+                class="btn btn-primary btn-lg btn-set"
+                id="walkin-set-btn">Set</button>
+      </div>
+    </div>
+  </div>
+</div>

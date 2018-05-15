@@ -1,0 +1,195 @@
+@import './modules/popup';
+@import './modules/colors';
+
+.calendar-container {
+  @extend .popup;
+
+  .modal-header {
+    background-color: $reservation-color;
+    color: white;
+    h1 {
+      padding-left: 10px;
+    }
+  }
+  .modal-content {
+    border-radius: 10px;
+    border-color: $reservation-color;
+    border-width: 5px;
+  }
+  .btn-set {
+    background-color: $reservation-color;
+    border: 3px solid $reservation-color;
+
+    &:hover {
+      background-color: $reservation-hover-color;
+      border: 3px solid $reservation-hover-color;
+    }
+  }
+
+  .modal-content {
+    height: 100%;
+  }
+
+  ul {
+    list-style-type: none;
+  }
+
+  .row {
+    height: 100%;
+  }
+
+  .calendar {
+    .header {
+      padding: 20px 20px;
+      margin-bottom: 0px;
+      &:hover {
+        cursor: default;
+      }
+
+      .next-prev-month {
+        @extend .not-selectable;
+        color: black;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+      #prev-month {
+        @extend .next-prev-month;
+        float: left;
+      }
+      #next-month {
+        @extend .next-prev-month;
+        float: right;
+      }
+
+      .header-title {
+        @extend .not-selectable;
+        text-align: center;
+        font-size: 15pt;
+        color: #505050;
+        &:hover {
+          cursor: default;
+        }
+      }
+    }
+
+    .weekdays {
+      padding-left: 0px;
+      margin-bottom: 5px;
+
+      li {
+        display: inline-block;
+        width: calc(100% / 7);
+        text-align: center;
+        color: #505050;
+        margin: -2px -2px;
+      }
+    }
+
+    #days {
+      height: 400px;
+
+      .cal-box {
+        position: relative;
+        display: inline-block;
+        width: calc(100% / 7);
+        height: 60px;
+        text-align: center;
+
+        border: 2px solid white;
+
+        .day {
+          @extend .not-selectable;
+          height: 100%;
+
+          &.clickable {
+            background-color: #ADEA9B;
+            &:hover {
+              background-color: #85E869;
+              cursor: pointer;
+            }
+            &.selected {
+              background-color: $selected-color;
+            }
+            -webkit-transition-property: background-color;
+                    transition-property: background-color;
+            -webkit-transition-duration: 0.3s;
+                    transition-duration: 0.3s;
+          }
+          &.today {
+            background-color: $reservation-color;
+            &:hover {
+              background-color: $reservation-hover-color;
+              cursor: pointer;
+            }
+            &.selected {
+              background-color: $selected-color;
+            }
+          }
+          &.nonclickable {
+            background-color: $border-color;
+            &:hover {
+              cursor: default;
+            }
+          }
+        }
+        .noday {
+          @extend .not-selectable;
+          opacity: 0;
+          height: 100%;
+          &:hover {
+            cursor: default;
+          }
+        }
+      }
+    }
+  }
+
+  .schedule {
+    .availability-title {
+      @extend .not-selectable;
+      position: relative;
+      text-align: center;
+      font-size: 15pt;
+      color: #505050;
+      top: 20px;
+      margin: 20px;
+      &:hover {
+        cursor: default;
+      }
+    }
+
+    .open-times-container {
+      height: 450px;
+      padding: 10px 10px;
+      overflow-y: scroll;
+    }
+
+    .time-slot {
+      position: relative;
+      height: 50px;
+      width: 90%;
+      text-align: center;
+      margin-top: 10px;
+
+      left: 5%;
+      background-color: $reservation-color;
+
+      &:hover {
+        cursor: pointer;
+        background-color: $reservation-hover-color;
+      }
+
+      &.selected {
+        background-color: $reservation-hover-color;
+      }
+    }
+  }
+
+  #save-btn {
+    &.disabled {
+      background-color: grey;
+      border-color: grey;
+    }
+  }
+}

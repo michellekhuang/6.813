@@ -1,0 +1,89 @@
+<div class="container-fluid homepage-container">
+  <div class="row" id="header">
+    <img src="img/logotext.png">
+  </div>
+  <div class="row main-content-row">
+    <table id='main-content'>
+      <tbody>
+        <tr>
+          <td id='sidebar'>
+            <div id="button-row">
+              <button type="button"
+                      id="walkInButton"
+                      class="btn btn-primary"
+                      data-toggle="modal"
+                      data-target="#walkin-div">
+                 Add Walk-in
+               </button>
+               <button type="button"
+                       id="reservationButton"
+                       class="btn btn-primary"
+                       data-toggle="modal"
+                       data-target="#reservation-div">
+                 Add <br> Reservation
+               </button>
+            </div>
+            <table id='inner-table'>
+              <tbody>
+                <tr id='walkInOuterContainer'>
+                  <td>
+                    <h2 class="app-text">Walk-Ins</h2>
+                    <div id="walkInContainer">
+                      <div class="placeholder" id="Eric_Chen" title="pusheen">
+                        <button type="button" class="close close-walkin" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <div class="inner-placeholder-name">Eric Chen (4)</div>
+                        <button type="button" class="btn btn-secondary bubble-btn">Info</button>
+                      </div>
+                      <div class="placeholder" id="Jenny_Liu" title="has pink hair">
+                        <button type="button" class="close close-walkin" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <div class="inner-placeholder-name">Jenny Liu (6)</div>
+                        <button type="button" class="btn btn-secondary bubble-btn">Info</button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr id='reservationOuterContainer'>
+                  <td>
+                    <h2 class="app-text">Reservations</h2>
+                    <div id="reservationContainer">
+                      <div class="placeholder reservation-placeholder" id="Jonatan Yucra">
+                        <button type="button" class="close close-reservation" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                        <div class="inner-placeholder-name">Jonatan Yucra (3)</div>
+                        <span class="inner-placeholder-date">5/10/17 8:30 pm</span>
+                        <button type="button" class="btn btn-secondary bubble-btn">Info</button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+          <td id='map'>
+            <!-- Tables -->
+            <div class="row waiters">
+              <div class='waiter'><div class='waiter1'></div><p>Waiter 1</p></div>
+              <div class='waiter'><div class='waiter2'></div><p>Waiter 2</p></div>
+              <div class='waiter'><div class='waiter3'></div><p>Waiter 3</p></div>
+            </div>
+            <div class='edit-toggle'>
+              <p>Edit Map Layout</p>
+              <label class='switch'>
+              <input type="checkbox" id='map-edit-button'>
+              <div class="slider round"></div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+
+  {{> partials/reservation-info-modal}}
+  {{> partials/walkin-info-modal}}
+  {{> partials/table-modal}}
+  {{> partials/new-walkin-modal}}
+  {{> partials/new-reservation-modal}}
+  {{> partials/calendar-modal}}
+</div>

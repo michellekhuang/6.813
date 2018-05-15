@@ -1,0 +1,42 @@
+<div class="modal calendar-container" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-9">
+            <div class="calendar">
+              <ul class="header">
+                <li id="prev-month">&#10094;</li>
+                <li id="next-month">&#10095;</li>
+                <li class="header-title">
+                  <span id="month-label"></span>
+                  <span id="year-label"></span>
+                </li>
+              </ul>
+              <ul class="weekdays">
+                <li class="app-text">Sun</li>
+                <li class="app-text">Mon</li>
+                <li class="app-text">Tue</li>
+                <li class="app-text">Wed</li>
+                <li class="app-text">Thu</li>
+                <li class="app-text">Fri</li>
+                <li class="app-text">Sat</li>
+              </ul>
+              <div id="days"></div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="schedule">
+              <div class="availability-title">Availability</div>
+              <div class="open-times-container"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="cancel-btn" class="btn btn-cancel btn-lg" type="button">Cancel</button>
+        <button id="save-btn" class="btn btn-primary btn-lg btn-set" type="button">Select</button>
+      </div>
+    </div>
+  </div>
+</div>

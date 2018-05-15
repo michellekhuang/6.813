@@ -1,0 +1,181 @@
+/* line 3, scss/map.scss */
+#map {
+  position: relative;
+  text-align: center;
+  overflow: auto;
+  height: 100%;
+  /* Hide default HTML checkbox */
+  /* The slider */
+  /* Rounded sliders */
+}
+
+/* line 9, scss/map.scss */
+#map div {
+  position: absolute;
+  border-radius: 10px;
+  padding: 10px;
+  color: white;
+}
+
+/* line 16, scss/map.scss */
+#map .tables {
+  border-style: solid;
+  border-width: 0px;
+  border-color: lightgrey;
+  box-shadow: 2px 2px 2px 0px grey;
+  z-index: 0;
+}
+
+/* line 24, scss/map.scss */
+#map .tables.table2 {
+  width: 100px;
+  height: 150px;
+}
+
+/* line 28, scss/map.scss */
+#map .tables.table4 {
+  width: 150px;
+  height: 150px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+/* line 34, scss/map.scss */
+#map .tables.table8 {
+  width: 200px;
+  height: 150px;
+  padding-left: 60px;
+  padding-right: 60px;
+}
+
+/* line 41, scss/map.scss */
+#map .tables.full {
+  opacity: .4 !important;
+}
+
+/* line 43, scss/map.scss */
+#map .tables.full:hover {
+  cursor: pointer;
+}
+
+/* line 49, scss/map.scss */
+#map .waiter1 {
+  background-color: #F09E00;
+}
+
+/* line 52, scss/map.scss */
+#map .waiter2 {
+  background-color: #24BDAB;
+}
+
+/* line 55, scss/map.scss */
+#map .waiter3 {
+  background-color: #006B5C;
+}
+
+/* line 58, scss/map.scss */
+#map .waiter4 {
+  background-color: #F8B195;
+}
+
+/* line 61, scss/map.scss */
+#map .waiter5 {
+  background-color: #6C5B7B;
+}
+
+/* line 65, scss/map.scss */
+#map .waiters {
+  position: absolute;
+  top: 0px;
+  left: 20px;
+  z-index: 100;
+}
+
+/* line 73, scss/map.scss */
+#map .waiter {
+  color: #505050;
+  width: 130px;
+  font-size: 10px;
+  position: relative;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px;
+}
+
+/* line 84, scss/map.scss */
+#map .edit-toggle {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  color: black;
+  display: inline;
+  font-size: 15px;
+  z-index: 100;
+}
+
+/* line 94, scss/map.scss */
+#map .edit-toggle .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* line 104, scss/map.scss */
+#map .switch input {
+  display: none;
+}
+
+/* line 107, scss/map.scss */
+#map .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+/* line 119, scss/map.scss */
+#map .slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+/* line 131, scss/map.scss */
+#map input:checked + .slider {
+  background-color: #2196F3;
+}
+
+/* line 135, scss/map.scss */
+#map input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+/* line 139, scss/map.scss */
+#map input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* line 146, scss/map.scss */
+#map .slider.round {
+  border-radius: 34px;
+}
+
+/* line 150, scss/map.scss */
+#map .slider.round:before {
+  border-radius: 50%;
+}

@@ -1,0 +1,296 @@
+/* line 1, scss/modules/popup.scss */
+.popup, .modal {
+  margin: auto;
+}
+
+/* line 5, scss/modules/popup.scss */
+.not-selectable {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* line 5, scss/forms.scss */
+.modal#walkin-div .modal-header {
+  background-color: #DD7D78;
+  color: white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* line 10, scss/forms.scss */
+.modal#walkin-div .modal-header h1 {
+  padding-left: 10px;
+}
+
+/* line 14, scss/forms.scss */
+.modal#walkin-div .modal-content {
+  border-radius: 10px;
+  border-width: 0px;
+}
+
+/* line 18, scss/forms.scss */
+.modal#walkin-div .btn-set {
+  background-color: #DD7D78;
+  border: 3px solid #DD7D78;
+}
+
+/* line 22, scss/forms.scss */
+.modal#walkin-div .btn-set:hover {
+  background-color: #BC6462;
+  border: 3px solid #BC6462;
+}
+
+/* line 5, scss/forms.scss */
+.modal#reservation-div .modal-header {
+  background-color: #5DA0C1;
+  color: white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* line 10, scss/forms.scss */
+.modal#reservation-div .modal-header h1 {
+  padding-left: 10px;
+}
+
+/* line 14, scss/forms.scss */
+.modal#reservation-div .modal-content {
+  border-radius: 10px;
+  border-width: 0px;
+}
+
+/* line 18, scss/forms.scss */
+.modal#reservation-div .btn-set {
+  background-color: #5DA0C1;
+  border: 3px solid #5DA0C1;
+}
+
+/* line 22, scss/forms.scss */
+.modal#reservation-div .btn-set:hover {
+  background-color: #4082A3;
+  border: 3px solid #4082A3;
+}
+
+/* line 5, scss/forms.scss */
+.modal#walkin-info-modal .modal-header {
+  background-color: #DD7D78;
+  color: white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* line 10, scss/forms.scss */
+.modal#walkin-info-modal .modal-header h1 {
+  padding-left: 10px;
+}
+
+/* line 14, scss/forms.scss */
+.modal#walkin-info-modal .modal-content {
+  border-radius: 10px;
+  border-width: 0px;
+}
+
+/* line 18, scss/forms.scss */
+.modal#walkin-info-modal .btn-set {
+  background-color: #DD7D78;
+  border: 3px solid #DD7D78;
+}
+
+/* line 22, scss/forms.scss */
+.modal#walkin-info-modal .btn-set:hover {
+  background-color: #BC6462;
+  border: 3px solid #BC6462;
+}
+
+/* line 5, scss/forms.scss */
+.modal#reservation-info-modal .modal-header {
+  background-color: #5DA0C1;
+  color: white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* line 10, scss/forms.scss */
+.modal#reservation-info-modal .modal-header h1 {
+  padding-left: 10px;
+}
+
+/* line 14, scss/forms.scss */
+.modal#reservation-info-modal .modal-content {
+  border-radius: 10px;
+  border-width: 0px;
+}
+
+/* line 18, scss/forms.scss */
+.modal#reservation-info-modal .btn-set {
+  background-color: #5DA0C1;
+  border: 3px solid #5DA0C1;
+}
+
+/* line 22, scss/forms.scss */
+.modal#reservation-info-modal .btn-set:hover {
+  background-color: #4082A3;
+  border: 3px solid #4082A3;
+}
+
+/* line 5, scss/forms.scss */
+.modal#table-modal .modal-header {
+  background-color: grey;
+  color: white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* line 10, scss/forms.scss */
+.modal#table-modal .modal-header h1 {
+  padding-left: 10px;
+}
+
+/* line 14, scss/forms.scss */
+.modal#table-modal .modal-content {
+  border-radius: 10px;
+  border-width: 0px;
+}
+
+/* line 18, scss/forms.scss */
+.modal#table-modal .btn-set {
+  background-color: grey;
+  border: 3px solid grey;
+}
+
+/* line 22, scss/forms.scss */
+.modal#table-modal .btn-set:hover {
+  background-color: grey;
+  border: 3px solid grey;
+}
+
+/* line 52, scss/forms.scss */
+.modal .row {
+  padding: 5px;
+}
+
+/* line 56, scss/forms.scss */
+.modal .label {
+  position: relative;
+  top: 9px;
+}
+
+/* line 61, scss/forms.scss */
+.modal .btn-cancel {
+  background-color: white;
+  border: 3px solid lightgray;
+}
+
+/* line 65, scss/forms.scss */
+.modal .btn-cancel:hover {
+  background-color: lightgray;
+  border: 3px solid lightgray;
+}
+
+/* line 71, scss/forms.scss */
+.modal .btn-delete {
+  background-color: #d9534f;
+  border: 3px solid #d9534f;
+}
+
+/* line 75, scss/forms.scss */
+.modal .btn-delete:hover {
+  background-color: #c9302c;
+  border: 3px solid #c9302c;
+}
+
+/* line 83, scss/forms.scss */
+.modal #reservation-datetime-btn:hover {
+  background-color: darkgray;
+}
+
+/* line 88, scss/forms.scss */
+.modal .col-md-4 {
+  text-align: right;
+}
+
+/* line 92, scss/forms.scss */
+.modal .col-md-8 {
+  margin-top: 10px;
+}
+
+/* line 96, scss/forms.scss */
+.modal span {
+  position: relative;
+  font-size: 150%;
+}
+
+/* line 101, scss/forms.scss */
+.modal input {
+  padding: 7px;
+  border: 1px solid gray;
+  border-radius: 3px;
+  box-shadow: none;
+}
+
+/* line 107, scss/forms.scss */
+.modal input:focus {
+  outline: none;
+}
+
+/* line 112, scss/forms.scss */
+.modal textarea {
+  vertical-align: top;
+  resize: none;
+  padding: 7px;
+  border-radius: 3px;
+}
+
+/* line 118, scss/forms.scss */
+.modal textarea[readonly]:hover {
+  cursor: default;
+}
+
+/* line 123, scss/forms.scss */
+.modal .select-style {
+  border: 1px solid #ccc;
+  width: 60px;
+  height: 30px;
+  border-radius: 3px;
+  border-color: gray;
+  overflow: hidden;
+  background: #fafafa;
+}
+
+/* line 132, scss/forms.scss */
+.modal .select-style:focus {
+  outline: none;
+}
+
+/* line 136, scss/forms.scss */
+.modal .select-styleselect {
+  padding: 5px 8px;
+  width: 130%;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  background-image: none;
+  -webkit-appearance: none;
+}
+
+/* line 145, scss/forms.scss */
+.modal .select-styleselect:focus {
+  outline: none;
+}
+
+/* line 152, scss/forms.scss */
+.modal .invalid.invalid-style, .modal .invalid#walkin-name, .modal .invalid#walkin-party-size, .modal .invalid#reservation-name, .modal .invalid#reservation-party-size, .modal .invalid#reservation-datetime-btn {
+  border-color: red;
+}
+
+/* line 174, scss/forms.scss */
+.modal-backdrop {
+  opacity: 0.2;
+}
+
+/* line 178, scss/forms.scss */
+.error {
+  color: red;
+}

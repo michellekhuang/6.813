@@ -1,0 +1,180 @@
+@import './modules/popup';
+@import './modules/colors';
+
+@mixin new-customer-modal($color, $hover-color) {
+  .modal-header {
+    background-color: $color;
+    color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    h1 {
+      padding-left: 10px;
+    }
+  }
+  .modal-content {
+    border-radius: 10px;
+    border-width: 0px;
+  }
+  .btn-set {
+    background-color: $color;
+    border: 3px solid $color;
+
+    &:hover {
+      background-color: $hover-color;
+      border: 3px solid $hover-color;
+    }
+  }
+}
+
+.modal {
+  @extend .popup;
+
+  &#walkin-div {
+    @include new-customer-modal($walkin-color, $walkin-hover-color);
+  }
+
+  &#reservation-div {
+    @include new-customer-modal($reservation-color, $reservation-hover-color);
+  }
+
+  &#walkin-info-modal {
+    @include new-customer-modal($walkin-color, $walkin-hover-color);
+  }
+
+  &#reservation-info-modal {
+    @include new-customer-modal($reservation-color, $reservation-hover-color);
+  }
+
+  &#table-modal {
+    @include new-customer-modal(grey, grey);
+  }
+
+  .row {
+    padding: 5px;
+  }
+
+  .label {
+    position: relative;
+    top: 9px;
+  }
+
+  .btn-cancel {
+    background-color: white;
+    border: 3px solid $border-color;
+
+    &:hover {
+      background-color: $border-color;
+      border: 3px solid $border-color;
+    }
+  }
+
+  .btn-delete {
+    background-color: $delete-color;
+    border: 3px solid $delete-color;
+
+    &:hover {
+      background-color: $delete-hover-color;
+      border: 3px solid $delete-hover-color;
+    }
+
+  }
+
+  #reservation-datetime-btn {
+    &:hover {
+      background-color: darkgray;
+    }
+  }
+
+  .col-md-4 {
+    text-align: right;
+  }
+
+  .col-md-8 {
+    margin-top: 10px;
+  }
+
+  span {
+    position: relative;
+    font-size: 150%;
+  }
+
+  input {
+    padding: 7px;
+    border: 1px solid gray;
+    border-radius: 3px;
+    box-shadow: none;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  textarea {
+    vertical-align: top;
+    resize: none;
+    padding: 7px;
+    border-radius: 3px;
+
+    &[readonly]:hover {
+      cursor: default;
+    }
+  }
+
+  .select-style {
+    border: 1px solid #ccc;
+    width: 60px;
+    height: 30px;
+    border-radius: 3px;
+    border-color: gray;
+    overflow: hidden;
+    background: #fafafa;
+
+    &:focus {
+      outline: none;
+    }
+
+    &select {
+      padding: 5px 8px;
+      width: 130%;
+      border: none;
+      box-shadow: none;
+      background: transparent;
+      background-image: none;
+      -webkit-appearance: none;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .invalid {
+    &.invalid-style {
+      border-color: red;
+    }
+
+    &#walkin-name {
+      @extend .invalid-style;
+    }
+    &#walkin-party-size {
+      @extend .invalid-style;
+    }
+    &#reservation-name {
+      @extend .invalid-style;
+    }
+    &#reservation-party-size {
+      @extend .invalid-style;
+    }
+    &#reservation-datetime-btn {
+      @extend .invalid-style;
+    }
+  }
+}
+
+.modal-backdrop {
+  opacity: 0.2;
+}
+
+.error {
+  color: red;
+}

@@ -1,0 +1,12 @@
+/* line 1, scss/modules/popup.scss */
+.popup {
+  margin: auto;
+}
+
+/* line 5, scss/modules/popup.scss */
+.not-selectable {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
